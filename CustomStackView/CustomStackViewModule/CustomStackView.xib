@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomStackView" customModule="CustomStackView" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="iN0-l3-epB" id="w2h-CE-UKb"/>
+                <outlet property="customHeightConstraint" destination="zV3-A1-Ywv" id="Whv-Sw-Tt5"/>
+                <outlet property="customWidthConstraint" destination="G07-gu-RAU" id="wfV-gS-xLO"/>
+                <outlet property="mainStackView" destination="hlv-kS-uyP" id="5KH-Qe-QbB"/>
+                <outlet property="scrollView" destination="Ndx-WY-6E4" id="QT4-2Z-rVQ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="929"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ndx-WY-6E4">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="929"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hlv-kS-uyP">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="929"/>
+                            <constraints>
+                                <constraint firstAttribute="width" priority="250" id="6BO-qj-sma"/>
+                                <constraint firstAttribute="height" priority="250" id="g6m-Nu-5At"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="hlv-kS-uyP" firstAttribute="leading" secondItem="Ndx-WY-6E4" secondAttribute="leading" id="0fK-IH-SwY"/>
+                        <constraint firstItem="hlv-kS-uyP" firstAttribute="top" secondItem="Ndx-WY-6E4" secondAttribute="top" id="HPC-0L-HPz"/>
+                        <constraint firstAttribute="trailing" secondItem="hlv-kS-uyP" secondAttribute="trailing" id="Jt7-mp-bJv"/>
+                        <constraint firstAttribute="bottom" secondItem="hlv-kS-uyP" secondAttribute="bottom" id="i6M-6Q-1lB"/>
+                    </constraints>
+                    <viewLayoutGuide key="contentLayoutGuide" id="YKw-G9-SlM"/>
+                    <viewLayoutGuide key="frameLayoutGuide" id="eVX-yI-Oq8"/>
+                </scrollView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Ndx-WY-6E4" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Dly-7Z-Fsc"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="top" secondItem="Ndx-WY-6E4" secondAttribute="top" id="FcC-bV-MaM"/>
+                <constraint firstItem="hlv-kS-uyP" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="G07-gu-RAU"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="leading" secondItem="Ndx-WY-6E4" secondAttribute="leading" id="I3K-Xs-a4v"/>
+                <constraint firstItem="Ndx-WY-6E4" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="WSS-tZ-4m9"/>
+                <constraint firstItem="hlv-kS-uyP" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="zV3-A1-Ywv"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="138.75" y="134.68309859154931"/>
+        </view>
+    </objects>
+</document>
