@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D3BE89D86CD035F36C47D4F /* libPods-CustomStackView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE64CABB5FF59253237FD39 /* libPods-CustomStackView.a */; };
 		F8E522A926A313DD0090EF00 /* CustomStackView.h in Headers */ = {isa = PBXBuildFile; fileRef = F8E522A726A313DD0090EF00 /* CustomStackView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8E522B426A412610090EF00 /* StackViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E522B126A412610090EF00 /* StackViewDataSource.swift */; };
 		F8E522B526A412610090EF00 /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E522B226A412610090EF00 /* CustomStackView.swift */; };
@@ -14,12 +15,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1EE64CABB5FF59253237FD39 /* libPods-CustomStackView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CustomStackView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A26EA3D640EB94F3E7A8D76C /* Pods-CustomStackView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomStackView.debug.xcconfig"; path = "Target Support Files/Pods-CustomStackView/Pods-CustomStackView.debug.xcconfig"; sourceTree = "<group>"; };
 		F8E522A426A313DC0090EF00 /* CustomStackView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CustomStackView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8E522A726A313DD0090EF00 /* CustomStackView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomStackView.h; sourceTree = "<group>"; };
 		F8E522A826A313DD0090EF00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8E522B126A412610090EF00 /* StackViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackViewDataSource.swift; sourceTree = "<group>"; };
 		F8E522B226A412610090EF00 /* CustomStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStackView.swift; sourceTree = "<group>"; };
 		F8E522B326A412610090EF00 /* CustomStackView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomStackView.xib; sourceTree = "<group>"; };
+		FD77E7FB651A96AA3890DDB0 /* Pods-CustomStackView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomStackView.release.xcconfig"; path = "Target Support Files/Pods-CustomStackView/Pods-CustomStackView.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,17 +31,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D3BE89D86CD035F36C47D4F /* libPods-CustomStackView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		64A8366BAE779081FB1C3818 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1EE64CABB5FF59253237FD39 /* libPods-CustomStackView.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F72B4CE7A05DE782CB982631 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A26EA3D640EB94F3E7A8D76C /* Pods-CustomStackView.debug.xcconfig */,
+				FD77E7FB651A96AA3890DDB0 /* Pods-CustomStackView.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		F8E5229A26A313DC0090EF00 = {
 			isa = PBXGroup;
 			children = (
 				F8E522A626A313DC0090EF00 /* CustomStackView */,
 				F8E522A526A313DC0090EF00 /* Products */,
+				F72B4CE7A05DE782CB982631 /* Pods */,
+				64A8366BAE779081FB1C3818 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +112,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F8E522AC26A313DD0090EF00 /* Build configuration list for PBXNativeTarget "CustomStackView" */;
 			buildPhases = (
+				DA1A8F01D5213E38692A2960 /* [CP] Check Pods Manifest.lock */,
 				F8E5229F26A313DC0090EF00 /* Headers */,
 				F8E522A026A313DC0090EF00 /* Sources */,
 				F8E522A126A313DC0090EF00 /* Frameworks */,
@@ -142,6 +168,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DA1A8F01D5213E38692A2960 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CustomStackView-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F8E522A026A313DC0090EF00 /* Sources */ = {
@@ -282,6 +333,7 @@
 		};
 		F8E522AD26A313DD0090EF00 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A26EA3D640EB94F3E7A8D76C /* Pods-CustomStackView.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -306,6 +358,7 @@
 		};
 		F8E522AE26A313DD0090EF00 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD77E7FB651A96AA3890DDB0 /* Pods-CustomStackView.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;

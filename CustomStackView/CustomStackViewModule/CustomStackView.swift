@@ -29,9 +29,12 @@ public class CustomStackView: UIView {
     @IBOutlet var customWidthConstraint: NSLayoutConstraint!
     @IBOutlet var customHeightConstraint: NSLayoutConstraint!
     private var constantMultiplier : Int = 60000
-    
+    private var constantInitialValue : Int = 0
+    private var maxPossibleSubviewTag : Int = 60000
+
     public override func awakeFromNib() {
         super.awakeFromNib()
+      //  scrollView.backgroundColor = ThemeManager.shared.getColorTheme().background
     }
     
     private weak var dataSource : StackViewDataSource?
@@ -48,7 +51,8 @@ public class CustomStackView: UIView {
     }
     
     private func commonInit(){
-        Bundle.main.loadNibNamed("CustomStackView", owner: self, options: nil)
+        let bundle = Bundle(for: self.classForCoder)
+        bundle.loadNibNamed("CustomStackView", owner: self, options: nil)
         addSubview(containerView)
         containerView.frame = self.bounds
         containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -73,7 +77,7 @@ public class CustomStackView: UIView {
         
         if let totalNumberOfSections = dataSrc.numberOfSections(in: self), totalNumberOfSections > 0{
             constantMultiplier = totalNumberOfSections + CustomStackSubViewType.getCount()
-
+            configureConstantInitialValue()
             var contraintType : NSLayoutConstraint.Attribute = .height
             if stackViewAxis == .horizontal {
                 contraintType = .width
@@ -107,8 +111,8 @@ public class CustomStackView: UIView {
                 if let totalNumberOfRows = dataSrc.numberOfRowsInSection(in: sectionIndex, stackView: self), totalNumberOfRows > 0{
                     let rowStackView = UIStackView(frame: CGRect(x: 0, y: 0, width: self.bounds.width, height: 10))
                     rowStackView.axis = stackViewAxis
-                    rowStackView.alignment = .fill
-                    rowStackView.distribution = .fill
+                    rowStackView.alignment = dataSrc.alignmentForSection(section: sectionIndex, stackView: self)
+                    rowStackView.distribution = dataSrc.distributionForSection(section: sectionIndex, stackView: self)
                     rowStackView.spacing = dataSrc.minimumInterRowsSpacing(in : sectionIndex, stackView: self)
 
                     for rowIndex in 0..<totalNumberOfRows {
@@ -122,6 +126,9 @@ public class CustomStackView: UIView {
                         constraint.priority = UILayoutPriority(251)
                         constraint.isActive = true
                         rowView.tag = getTagForStackIndex(stackIndex: stackIndex)
+                        if maxPossibleSubviewTag < rowView.tag {
+                            maxPossibleSubviewTag = rowView.tag
+                        }
                         rowStackView.addArrangedSubview(rowView)
                     }
                     sectionBackgroundView.addSubview(rowStackView)
@@ -164,17 +171,17 @@ public class CustomStackView: UIView {
     }
     
     private func getTagForAddedSubView(section : Int, viewType : CustomStackSubViewType) -> Int {
-        return section*constantMultiplier + viewType.rawValue
+        return section*constantMultiplier + viewType.rawValue + constantInitialValue
     }
 
     private func getTagForStackIndex(stackIndex : StackIndex) -> Int {
-        return (stackIndex.row*constantMultiplier) + stackIndex.section + (CustomStackSubViewType.getCount() + 1)
+        return (stackIndex.row*constantMultiplier) + stackIndex.section + (CustomStackSubViewType.getCount() + 1) + constantInitialValue
     }
     private func getSectionIndexForBgView(customView : UIView, viewType : CustomStackSubViewType) -> Int?{
         if !customView.isDescendant(of: mainStackView) {
             return nil
         }
-        let customTag = customView.tag - viewType.rawValue
+        let customTag = customView.tag - viewType.rawValue - constantInitialValue
         if customTag%constantMultiplier == 0 {
             return customTag/constantMultiplier
         }
@@ -186,11 +193,11 @@ public class CustomStackView: UIView {
         if !customView.isDescendant(of: mainStackView) {
             return nil
         }
-        let customTag = customView.tag % constantMultiplier
+        let customTag = (customView.tag - constantInitialValue ) % constantMultiplier
         if  CustomStackSubViewType(rawValue: customTag) != nil {
             return nil
         }
-        let formulaTag = customView.tag - (CustomStackSubViewType.getCount() + 1)
+        let formulaTag = customView.tag - (CustomStackSubViewType.getCount() + 1) - constantInitialValue
         let row = formulaTag/constantMultiplier
         let section = formulaTag%constantMultiplier
         return StackIndex(row: row, section: section)
@@ -218,6 +225,8 @@ public class CustomStackView: UIView {
         scrollView.clipsToBounds = dataSource?.isScrollViewClipToBounds(stackView: self) ?? false
         let showsHorizontalScrollIndicator = dataSource?.isShowsHorizontalScrollIndicator(stackView: self) ?? true
         let showsVerticalScrollIndicator = dataSource?.isShowsVerticalScrollIndicator(stackView: self) ?? true
+        scrollView.isScrollEnabled = !needContentSized
+        
         if dataSource?.axisForStackView(stackView: self) == .vertical {
             
             scrollView.showsVerticalScrollIndicator = !needContentSized && showsVerticalScrollIndicator
@@ -226,16 +235,18 @@ public class CustomStackView: UIView {
             scrollView.showsHorizontalScrollIndicator = false
             scrollView.alwaysBounceHorizontal = false
             
-            scrollView.isScrollEnabled = !needContentSized
-            
             if needContentSized {
-                customHeightConstraint.priority = UILayoutPriority(999)
+                if #available(iOS 13.0, *){
+                    customHeightConstraint.priority = UILayoutPriority(999)
+                }
                 customHeightConstraint.isActive = true
             }
             else{
                 customHeightConstraint.isActive = false
             }
-            customWidthConstraint.priority = UILayoutPriority(1000)
+            if #available(iOS 13.0, *){
+                customWidthConstraint.priority = UILayoutPriority(1000)
+            }
             customWidthConstraint.isActive = true
         }
         else if dataSource?.axisForStackView(stackView: self) == .horizontal {
@@ -244,29 +255,47 @@ public class CustomStackView: UIView {
             
             scrollView.showsHorizontalScrollIndicator = !needContentSized && showsHorizontalScrollIndicator
             scrollView.alwaysBounceHorizontal = !needContentSized
-            
-            scrollView.isScrollEnabled = !needContentSized
-            
+                        
             if needContentSized {
-                customWidthConstraint.priority = UILayoutPriority(999)
+                if #available(iOS 13.0, *){
+                    customWidthConstraint.priority = UILayoutPriority(999)
+                }
                 customWidthConstraint.isActive = true
             }
             else{
                 customWidthConstraint.isActive = false
             }
-            customHeightConstraint.priority = UILayoutPriority(1000)
+            if #available(iOS 13.0, *){
+                customHeightConstraint.priority = UILayoutPriority(1000)
+            }
             customHeightConstraint.isActive = true
         }
     }
+    
+    private func configureConstantInitialValue(){
+        func checkIfSuperviewIsCustomStackView() -> CustomStackView?{
+            var customCheck: UIView? = self.superview
+            while !(customCheck is CustomStackView) && customCheck != nil {
+                customCheck = customCheck?.superview
+            }
+            return customCheck as? CustomStackView
+        }
+        if let superCustomStackView = checkIfSuperviewIsCustomStackView() {
+            self.constantInitialValue = superCustomStackView.maxPossibleSubviewTag
+        }
+    }
+    
 }
 
 public extension CustomStackView {
     func setStackViewDataSource(dataSource : StackViewDataSource?){
         self.dataSource = dataSource
         configureAllViews()
+        reloadContentsOfAllViews()
     }
     func reloadAllData(){
         configureAllViews()
+        reloadContentsOfAllViews()
     }
     
     func reloadViewDataAtIndex(stackIndex : StackIndex){
@@ -378,11 +407,16 @@ public extension CustomStackView {
     func setScrollViewContentOffset(contentOffset : CGPoint, animated: Bool){
         scrollView.setContentOffset(contentOffset, animated: animated)
     }
-
     
+    func scrollAt(index: StackIndex, animation: Bool) {
+        guard let view = getViewForStackIndex(stackIndex: index) else {
+            return
+        }
+        scrollView.scrollRectToVisible(view.frame, animated: animation)
+    }
 }
 
-internal extension UIStackView {
+extension UIStackView {
     
     func removeAllArrangedSubviews() {
         

@@ -83,6 +83,11 @@ public protocol StackViewDataSource: AnyObject {
     // axis for stackview, it can be vertical or horizontal. Default is vertical
     func axisForStackView(stackView : UIView) -> NSLayoutConstraint.Axis
     
+    // axis for stackview, it can be vertical or horizontal. Default is vertical
+    func alignmentForSection(section : Int, stackView : UIView) -> UIStackView.Alignment
+    // axis for stackview, it can be vertical or horizontal. Default is vertical
+    func distributionForSection(section : Int, stackView : UIView) -> UIStackView.Distribution
+
     // if axis is horizontal then this function will not be used,
     // if axis is vertical then for safe case handling estimated row height will be provided to the view at given stack index. Default is 0.0
     func estimatedRowHeight(stackIndex : StackIndex, stackView : UIView) -> CGFloat
@@ -151,6 +156,14 @@ public extension StackViewDataSource {
         return .vertical
     }
     
+    func alignmentForSection(section : Int, stackView : UIView) -> UIStackView.Alignment{
+        return .fill
+    }
+    
+    func distributionForSection(section : Int, stackView : UIView) -> UIStackView.Distribution{
+        return .fill
+    }
+
     func numberOfSections(in stackView : UIView) -> Int?{
         return 1
     }
